@@ -1,0 +1,24 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Title:</strong>
+  <%= @trash.title %>
+</p>
+
+<p>
+  <strong>Description:</strong>
+  <%= @trash.description %>
+</p>
+
+<p>
+  <strong>Catetory:</strong>
+  <%= @trash.catetory_id %>
+</p>
+
+<p>
+  <strong>Trash type:</strong>
+  <%= @trash.trash_type %>
+</p>
+
+<%= link_to 'Edit', edit_trash_path(@trash) %> |
+<%= link_to 'Back', trashes_path %>

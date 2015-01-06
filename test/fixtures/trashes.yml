@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  title: MyString
+  description: MyString
+  catetory_id: MyString
+  trash_type: false
+
+two:
+  title: MyString
+  description: MyString
+  catetory_id: MyString
+  trash_type: false
