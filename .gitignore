@@ -21,7 +21,6 @@
 
 .DS_Store
 
-/config/secrets.yml
 
 # Environment normalisation:
 /.bundle
