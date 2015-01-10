@@ -25,6 +25,7 @@ class TempImagesController < ApplicationController
   # POST /temp_images.json
   def create
       @temp_image = TempImage.create(temp_image_params) 
+      @temp_images = TempImage.find_by_temp_id(@temp_image.temp_id)
   end
 
   # PATCH/PUT /temp_images/1
@@ -44,10 +45,12 @@ class TempImagesController < ApplicationController
   # DELETE /temp_images/1
   # DELETE /temp_images/1.json
   def destroy
+    
     @temp_image.destroy
     respond_to do |format|
-      format.html { redirect_to temp_images_url, notice: 'Temp image was successfully destroyed.' }
+      # format.html { redirect_to temp_images_url, notice: 'Temp image was successfully destroyed.' }
       format.json { head :no_content }
+      @temp_images = TempImage.find_by_temp_id(@temp_image.temp_id)
       format.js
     end
   end
@@ -60,6 +63,6 @@ class TempImagesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def temp_image_params
-      params.require(:temp_image).permit(:image, :temp_id)
+      params.require(:temp_image).permit(:image, :temp_id, :name)
     end
 end

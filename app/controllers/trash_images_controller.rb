@@ -69,6 +69,6 @@ class TrashImagesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def trash_image_params
-      params.require(:trash_image).permit(:trash_image, :trash_id)
+      params.require(:trash_image).permit(:trash_image, :trash_id, :name)
     end
 end

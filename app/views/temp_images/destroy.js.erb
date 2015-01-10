@@ -1,1 +1,1 @@
-$("#temp_images").html("<%= j render 'images' %>")
+$("#temp_images").html("<%= j render 'images', locals: { temp_images: @temp_images } %>")

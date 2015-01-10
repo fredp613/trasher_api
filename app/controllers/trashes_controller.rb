@@ -16,8 +16,7 @@ class TrashesController < ApplicationController
   def new
     @trash = Trash.new
     @trash.temp_id = ('a'..'z').to_a.shuffle[0,8].join
-    @temp_image = TempImage.where(temp_id: @trash.temp_id)
-
+    
   end
 
   # GET /trashes/1/edit
@@ -33,10 +32,13 @@ class TrashesController < ApplicationController
         @temp_images = TempImage.find_by_temp_id(@trash.temp_id)
         unless @temp_images.blank?
           @temp_images.each do |ti|            
-            @trash.trash_images.create(trash_image: ti.image)
-            ti.destroy            
+            @trash.trash_images.create(trash_image: ti.image, name: ti.name)                  
+          end
+          @temp_images.each do |ti|
+            ti.destroy
           end
         end
+
 
         format.html { redirect_to @trash, notice: 'Trash was successfully created.' }
         format.json { render :show, status: :created, location: @trash }
