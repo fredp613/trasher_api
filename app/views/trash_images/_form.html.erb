@@ -1,0 +1,25 @@
+<%= form_for @trash_image, :html => { :multipart => true, :id => "frm_trash_images"  } do |f| %>
+  <% if @trash_image.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@trash_image.errors.count, "error") %> prohibited this trash_image from being saved:</h2>
+
+      <ul>
+      <% @trash_image.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :trash_image %><br>
+    <%= f.file_field :trash_image, multiple: true %>
+  </div>
+  <div class="field">
+    <%= f.label :trash_id %><br>
+    <%= f.text_field :trash_id %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

@@ -1,5 +1,10 @@
 Rails.application.routes.draw do
-  resources :trashes
+  resources :temp_images
+
+  resources :trash_images
+  
+  resources :trashes 
+  
   resources :categories
 
   # The priority is based upon order of creation: first created -> highest priority.

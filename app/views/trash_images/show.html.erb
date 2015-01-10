@@ -1,0 +1,22 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Trash image:</strong>
+  <%= image_tag @trash_image.trash_image_url(:main).to_s %>
+</p>
+
+<p>
+  <strong>Trash:</strong>
+  <%= @trash_image.trash.title %>
+</p>
+
+<%= link_to 'Edit', edit_trash_image_path(@trash_image) %> |
+<%= link_to 'Back', trash_images_path %>
+
+<%= form_for TrashImage.new do |f| %>
+
+<%= f.text_field :trash_id %>
+<%= f.label :trash_image, "Upload images" %>
+<%= f.file_field :trash_image, multiple: true, name: "trash_image[trash_image]"%>
+
+<% end %>

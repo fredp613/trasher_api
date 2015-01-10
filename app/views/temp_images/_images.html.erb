@@ -1,0 +1,7 @@
+
+  <% unless @temp_image.blank? %>
+    <% TempImage.where(temp_id: @temp_image.temp_id).each do |ti| %>
+      <%= image_tag ti.image_url(:main).to_s %>
+      <%= link_to "remove", temp_image_path(ti), method: 'delete', remote: true %>
+    <% end %>
+  <% end %>

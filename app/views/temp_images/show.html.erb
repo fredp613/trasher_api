@@ -1,0 +1,14 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Image:</strong>
+  <%= @temp_image.image %>
+</p>
+
+<p>
+  <strong>Temp:</strong>
+  <%= @temp_image.temp_id %>
+</p>
+
+<%= link_to 'Edit', edit_temp_image_path(@temp_image) %> |
+<%= link_to 'Back', temp_images_path %>

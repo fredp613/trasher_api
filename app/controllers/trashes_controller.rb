@@ -15,6 +15,9 @@ class TrashesController < ApplicationController
   # GET /trashes/new
   def new
     @trash = Trash.new
+    @trash.temp_id = ('a'..'z').to_a.shuffle[0,8].join
+    @temp_image = TempImage.where(temp_id: @trash.temp_id)
+
   end
 
   # GET /trashes/1/edit
@@ -24,12 +27,20 @@ class TrashesController < ApplicationController
   # POST /trashes
   # POST /trashes.json
   def create
-    @trash = Trash.new(trash_params)
-
+    @trash = Trash.new(trash_params)   
     respond_to do |format|
-      if @trash.save
+      if @trash.save        
+        @temp_images = TempImage.find_by_temp_id(@trash.temp_id)
+        unless @temp_images.blank?
+          @temp_images.each do |ti|            
+            @trash.trash_images.create(trash_image: ti.image)
+            ti.destroy            
+          end
+        end
+
         format.html { redirect_to @trash, notice: 'Trash was successfully created.' }
         format.json { render :show, status: :created, location: @trash }
+        # format.js
       else
         format.html { render :new }
         format.json { render json: @trash.errors, status: :unprocessable_entity }
@@ -51,6 +62,10 @@ class TrashesController < ApplicationController
     end
   end
 
+  def create_temp_image
+    TempImage.create(params[:temp_image])
+  end
+
   # DELETE /trashes/1
   # DELETE /trashes/1.json
   def destroy
@@ -69,6 +84,6 @@ class TrashesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def trash_params
-      params.require(:trash).permit(:title, :description, :catetory_id, :trash_type)
+      params.require(:trash).permit(:title, :description, :catetory_id, :trash_type, :images, :temp_id)
     end
 end

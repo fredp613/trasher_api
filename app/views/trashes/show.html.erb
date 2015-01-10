@@ -20,5 +20,10 @@
   <%= @trash.trash_type %>
 </p>
 
+<% @trash.trash_images.each do |ti| %>
+  <%= image_tag ti.trash_image_url(:main).to_s %>
+<% end %>
+
+
 <%= link_to 'Edit', edit_trash_path(@trash) %> |
 <%= link_to 'Back', trashes_path %>
