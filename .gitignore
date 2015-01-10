@@ -22,9 +22,10 @@
 .DS_Store
 
 
-# Environment normalisation:
+## Environment normalisation:
 /.bundle
 /vendor/bundle
+/public/uploads/
 
 # /config/secrets.yml
 /config/database.yml
