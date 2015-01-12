@@ -1,5 +1,6 @@
 class TrashesController < ApplicationController
   before_action :set_trash, only: [:show, :edit, :update, :destroy]
+  before_action :authenticate_user!
 
   # GET /trashes
   # GET /trashes.json
@@ -15,8 +16,7 @@ class TrashesController < ApplicationController
   # GET /trashes/new
   def new
     @trash = Trash.new
-    @trash.temp_id = ('a'..'z').to_a.shuffle[0,8].join
-    
+    @trash.temp_id = ('a'..'z').to_a.shuffle[0,8].join    
   end
 
   # GET /trashes/1/edit
@@ -26,9 +26,12 @@ class TrashesController < ApplicationController
   # POST /trashes
   # POST /trashes.json
   def create
-    @trash = Trash.new(trash_params)   
+    @trash = Trash.new(trash_params) 
+     
     respond_to do |format|
-      if @trash.save        
+      if @trash.save
+        @trash.created_by = current_user.id
+        @trash.updated_by = current_user.id         
         @temp_images = TempImage.find_by_temp_id(@trash.temp_id)
         unless @temp_images.blank?
           @temp_images.each do |ti|            
@@ -53,6 +56,7 @@ class TrashesController < ApplicationController
   # PATCH/PUT /trashes/1
   # PATCH/PUT /trashes/1.json
   def update
+    @trash.updated_by = current_user
     respond_to do |format|
       if @trash.update(trash_params)
         format.html { redirect_to @trash, notice: 'Trash was successfully updated.' }

@@ -52,3 +52,4 @@ gem 'rmagick', '~> 2.13.3', require: false
 gem 'fog'
 gem 'redcarpet'
 gem 'kaminari'
+gem 'devise'

@@ -1,8 +1,7 @@
 class TrashImage < ActiveRecord::Base
   belongs_to :trash
-  attr_accessor
-  mount_uploader :trash_image, ImageUploader
 
+  mount_uploader :trash_image, ImageUploader
   before_destroy :remove_img
 
   def remove_img

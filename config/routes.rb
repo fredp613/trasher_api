@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  devise_for :users
   resources :temp_images
 
   resources :trash_images

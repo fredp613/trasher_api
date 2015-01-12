@@ -1,5 +1,6 @@
 <%#= form_for(@trash) do |f| %>
 <%= form_for @trash, :html => { :multipart => true, :id => "frm_trash"  } do |f| %>
+
   <% if @trash.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@trash.errors.count, "error") %> prohibited this trash from being saved:</h2>

@@ -25,7 +25,8 @@ class TrashImagesController < ApplicationController
   # POST /trash_images.json
   def create
     @trash_image = TrashImage.new(trash_image_params)
-
+    @trash_image.created_by = current_user.id
+    @trash_image.updated_by = current_user.id 
     respond_to do |format|
       if @trash_image.save
         format.html { redirect_to trash_images_url, notice: 'Trash image was successfully created.' }
@@ -40,6 +41,7 @@ class TrashImagesController < ApplicationController
   # PATCH/PUT /trash_images/1
   # PATCH/PUT /trash_images/1.json
   def update
+    @trash_image.updated_by = current_user.id 
     respond_to do |format|
       if @trash_image.update(trash_image_params)
         format.html { redirect_to @trash_image, notice: 'Trash image was successfully updated.' }
