@@ -6,9 +6,11 @@ class TempImage < ActiveRecord::Base
 	before_create :default_name
 	after_destroy :remove_img
 
+
 	def remove_img
-	 FileUtils.rm_rf("#{Rails.root}/public/uploads/images/temp_image/#{self.id}")
-	 FileUtils.rm_rf("#{Rails.root}/public/uploads/images/temp_image/thumb_#{self.id}")
+		# FileUtils.rm_rf("#{Rails.root}/public/uploads/images/temp_image/#{self.id}")
+		# FileUtils.rm_rf("#{Rails.root}/public/uploads/images/temp_image/thumb_#{self.id}")
+	 self.remove_image!
 	end
 
 	def default_name
