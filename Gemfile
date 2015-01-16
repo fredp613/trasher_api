@@ -53,3 +53,5 @@ gem 'fog'
 gem 'redcarpet'
 gem 'kaminari'
 gem 'devise'
+gem 'figaro'
+
