@@ -44,7 +44,7 @@ class TrashImagesController < ApplicationController
     @trash_image.updated_by = current_user.id 
     respond_to do |format|
       if @trash_image.update(trash_image_params)
-        format.html { redirect_to @trash_image, notice: 'Trash image was successfully updated.' }
+        format.html { redirect_to @trash_image, notice: 'Trash was successfully updated.' }
         format.json { render :show, status: :ok, location: @trash_image }
       else
         format.html { render :edit }
