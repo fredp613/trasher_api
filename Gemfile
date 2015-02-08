@@ -56,4 +56,5 @@ gem 'redcarpet'
 gem 'kaminari'
 gem 'devise'
 gem 'figaro'
+gem 'simple_token_authentication', '~> 1.0'
 
