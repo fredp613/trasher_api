@@ -14,16 +14,7 @@ class RegistrationsController < Devise::SessionsController
           super
         }
         format.json {
-
-          # resource = resource_from_credentials
-          #build_resource
-          # return invalid_login_attempt unless resource
-
-          # if resource.valid_password?(params[:password])
-            render :json => { user: { email: resource.email, :auth_token => resource.authentication_token } }, success: true, status: :created
-          # else
-            # render :json => { success: false }
-          # end
+          render :json => user.as_json(:auth_token=>user.authentication_token, :email=>user.email), :status=>201
         }
       end
     end
