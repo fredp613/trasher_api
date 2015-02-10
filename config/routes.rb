@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  devise_for :users, :controllers => {:registrations => "registrations"}
+  devise_for :users, :controllers => {:sessions => "overrides/sessions"}
   resources :temp_images
 
   resources :trash_images
