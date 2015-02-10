@@ -19,11 +19,11 @@ class RegistrationsController < Devise::SessionsController
           #build_resource
           # return invalid_login_attempt unless resource
 
-          if resource.valid_password?(params[:password])
+          # if resource.valid_password?(params[:password])
             render :json => { user: { email: resource.email, :auth_token => resource.authentication_token } }, success: true, status: :created
-          else
-            render :json => { success: false }
-          end
+          # else
+            # render :json => { success: false }
+          # end
         }
       end
     end
