@@ -1,3 +1,6 @@
+
+# module Overrides
+
 class SessionsController < Devise::SessionsController
     skip_before_filter :authenticate_user!, :only => [:create, :new]
     # skip_authorization_check only: [:create, :failure, :show_current_user, :options, :new]
@@ -62,3 +65,5 @@ class SessionsController < Devise::SessionsController
       end
     end
   end
+
+# end
