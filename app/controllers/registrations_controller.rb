@@ -7,6 +7,5 @@ class RegistrationsController < Devise::RegistrationsController
     else
       render :json => { :state_code => 1,  :messages => @user.errors.full_messages }
     end
-
   end
 end
