@@ -2,8 +2,8 @@
 # module Overrides
 
 class SessionsController < Devise::SessionsController
-    skip_before_filter :authenticate_user!, :only => [:create, :new]
-    # skip_authorization_check only: [:create, :failure, :show_current_user, :options, :new]
+   skip_before_filter :authenticate_user!, :only => [:create, :new]
+    skip_authorization_check only: [:create, :failure, :show_current_user, :options, :new]
     respond_to :json
 
     def new
@@ -26,7 +26,7 @@ class SessionsController < Devise::SessionsController
 
           if resource.valid_password?(params[:password])
             render :json => { user: { email: resource.email, :auth_token => resource.authentication_token } }, success: true, status: :created
-          else            
+          else
             invalid_login_attempt
           end
         }
