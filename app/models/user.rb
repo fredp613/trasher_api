@@ -13,9 +13,7 @@ class User < ActiveRecord::Base
   def self.find_by_email(email)
   	current_user = User.where(email: email)
   end
-
-  
-   
+     
   def generate_secure_token_string
     SecureRandom.urlsafe_base64(25).tr('lIO0', 'sxyz')
   end
