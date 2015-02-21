@@ -7,7 +7,7 @@ class ApplicationController < ActionController::Base
 
   before_filter :authenticate_user_from_token!
   before_filter :authenticate_user!
-
+  around_filter :global_request_logging
 
  
  #  private
@@ -25,5 +25,16 @@ class ApplicationController < ActionController::Base
       sign_in(user, store: false)
     end
   end
+
+
+
+  def global_request_logging 
+    logger.info "USERAGENT: #{request.headers['X-API-TOKEN']}"
+    begin 
+      yield 
+    ensure 
+      logger.info "response_status: #{response.status}"
+    end 
+  end 
 
 end
