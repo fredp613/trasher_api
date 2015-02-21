@@ -3,7 +3,8 @@
 
 class SessionsController < Devise::SessionsController
    skip_before_filter :authenticate_user!, :only => [:create, :new]
-    skip_authorization_check only: [:create, :failure, :show_current_user, :options, :new]
+   #for cancan:
+    # skip_authorization_check only: [:create, :failure, :show_current_user, :options, :new]
     respond_to :json
 
     def new
