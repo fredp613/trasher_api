@@ -2,6 +2,7 @@ class TrashesController < ApplicationController
   before_action :set_trash, only: [:show, :edit, :update, :destroy]
   skip_before_filter :authenticate_user, only: [:index, :show]
   
+  
   # GET /trashes
   # GET /trashes.json
   def index
