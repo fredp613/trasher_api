@@ -25,7 +25,7 @@ class SessionsController < Devise::SessionsController
 
           if resource.valid_password?(params[:user][:password])
             render :json => { user: { email: resource.email, :auth_token => resource.authentication_token } }, success: true, status: :created
-          else
+          else            
             invalid_login_attempt
           end
         }
@@ -52,7 +52,7 @@ class SessionsController < Devise::SessionsController
     protected
     def invalid_login_attempt
       warden.custom_failure!
-      render json: { success: false, message: 'Error with your login or password' }, status: 401
+      render json: { success: false, message: 'Error with your login or password', user: params[:user][:password] }, status: 401
     end
 
     def resource_from_credentials
