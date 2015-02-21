@@ -1,5 +1,7 @@
 class TrashImagesController < ApplicationController
   before_action :set_trash_image, only: [:show, :edit, :update, :destroy]
+  skip_before_filter :authenticate_user!, only: [:index, :show]
+  skip_before_filter :authenticate_user_from_token!, only: [:index, :show]
 
   # GET /trash_images
   # GET /trash_images.json
