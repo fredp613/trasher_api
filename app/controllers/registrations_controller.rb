@@ -7,7 +7,7 @@ class RegistrationsController < Devise::RegistrationsController
         }
         format.json {
 
-          User.create(params[:user])
+          User.create(sign_up_params)
           if @user.save
 			      render :json => { :state_code => 0, :user => @user }
 			    else
