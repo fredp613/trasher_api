@@ -1,4 +1,5 @@
 class RegistrationsController < Devise::RegistrationsController
+skep_before_filter :authenticate_user_from_token!, :only => [:create, :new]
 skip_before_filter :authenticate_user!, :only => [:create, :new]
  respond_to :json
 
@@ -8,7 +9,6 @@ skip_before_filter :authenticate_user!, :only => [:create, :new]
           super
         }
         format.json {
-
           User.create(sign_up_params_json)
           if @user.save
 			      render :json => { :state_code => 0, :user => @user }
