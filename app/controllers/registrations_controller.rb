@@ -9,7 +9,7 @@ skip_before_filter :authenticate_user!, :only => [:create, :new]
         }
         format.json {
 
-          User.create(sign_up_params)
+          User.create(sign_up_params_json)
           if @user.save
 			      render :json => { :state_code => 0, :user => @user }
 			    else
@@ -18,4 +18,10 @@ skip_before_filter :authenticate_user!, :only => [:create, :new]
         }
       end
     end
+
+    def sign_up_params_json
+    	params.require(:user).permit(:email, :password, :password_confirmation)
+    end
+
+
 end
