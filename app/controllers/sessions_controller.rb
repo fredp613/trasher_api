@@ -43,6 +43,7 @@ class SessionsController < Devise::SessionsController
           user = User.find_by_authentication_token(request.headers['X-API-TOKEN']).first
 
           if user
+            render :data => { :wtf => "hi"}
             render :json => { :message =>  { :test => 'Session deleted.'} }, :success => true, :status => 204
             logger.info "LOGOUT MESSAGE: #{user.authentication_token}"
             user.reset_authentication_token!
