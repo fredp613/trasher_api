@@ -18,7 +18,7 @@ class User < ActiveRecord::Base
     current_user = User.where(authentication_token: token)
   end
      
-  def self.generate_secure_token_string
+  def generate_secure_token_string
     SecureRandom.urlsafe_base64(25).tr('lIO0', 'sxyz')
   end
 
@@ -43,14 +43,14 @@ class User < ActiveRecord::Base
     end
   end
 
-  def self.generate_authentication_token
+  def generate_authentication_token
     loop do
       token = generate_secure_token_string
       break token unless User.where(authentication_token: token).first
     end
   end
 
-  def self.reset_authentication_token!
-    self.authentication_token = self.generate_authentication_token
+  def reset_authentication_token!
+    self.authentication_token = generate_authentication_token
   end
 end
