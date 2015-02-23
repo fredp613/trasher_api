@@ -40,7 +40,7 @@ class SessionsController < Devise::SessionsController
           super
         }
         format.json {
-          user = User.find_by_authentication_token(request.headers['X-API-TOKEN'])
+          user = User.find_by_authentication_token(request.headers['X-API-TOKEN']).first
 
           if user
             logger.info "LOGOUT MESSAGE: #{user.authentication_token}"
