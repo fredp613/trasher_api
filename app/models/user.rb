@@ -43,7 +43,7 @@ class User < ActiveRecord::Base
     end
   end
 
-  def generate_authentication_token
+  def self.generate_authentication_token
     loop do
       token = generate_secure_token_string
       break token unless User.where(authentication_token: token).first
