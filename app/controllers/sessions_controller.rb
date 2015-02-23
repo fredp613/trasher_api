@@ -57,12 +57,12 @@ class SessionsController < Devise::SessionsController
     def destroy
       sign_out(resource)
       respond_to do |format|
-      format.html {
-        super
-      }
-      format.json {
-        render :json { :message => "probably wont work" }
-      }
+        format.html {
+          super
+        }
+        format.json {
+          render :json => { :message => "probably wont work" }
+        }
       end
     end
 
