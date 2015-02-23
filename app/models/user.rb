@@ -18,7 +18,7 @@ class User < ActiveRecord::Base
     current_user = User.where(authentication_token: token)
   end
      
-  def generate_secure_token_string
+  def self.generate_secure_token_string
     SecureRandom.urlsafe_base64(25).tr('lIO0', 'sxyz')
   end
 
