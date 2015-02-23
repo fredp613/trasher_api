@@ -4,7 +4,6 @@
 class SessionsController < Devise::SessionsController
   skip_before_filter :authenticate_user!, :only => [:create, :new, :destroy]
   skip_before_filter :authenticate_user_from_token!, :only => [:destroy]
-  skip_before_filter :verify_signed_out_user, :only => [:destroy]
   respond_to :json
 
     def new
@@ -45,6 +44,7 @@ class SessionsController < Devise::SessionsController
           if user
             logger.info "LOGOUT MESSAGE: #{user.authentication_token}"
             user.reset_authentication_token!
+            logger.info "LOGOUT MESSAGE: #{user.authentication_token}"
             render :json => { :message => 'Session deleted.' }, :success => true, :status => 204
           else
             logger.info "LOGOUT MESSAGE: #{WE DIDNT MAKE IT}"
