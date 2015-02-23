@@ -16,7 +16,7 @@ class ApplicationController < ActionController::Base
     user_email = request.headers["X-API-EMAIL"].presence
     user_auth_token = request.headers["X-API-TOKEN"].presence
     user = User.find_by_email(user_email).first
-
+    logger.info("FUCK YOU YOU FUCK #{user.email}")
     # Notice how we use Devise.secure_compare to compare the token
     # in the database with the token given in the params, mitigating
     # timing attacks.
