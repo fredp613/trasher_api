@@ -33,25 +33,33 @@ class SessionsController < Devise::SessionsController
       end
     end
 
-    def destroy
-      respond_to do |format|
-        format.html {
-          super
-        }
-        format.json {
-          user = User.find_by_authentication_token(request.headers['X-API-TOKEN']).first
+    # def destroy
+    #   respond_to do |format|
+    #     format.html {
+    #       super
+    #     }
+    #     format.json {
+    #       user = User.find_by_authentication_token(request.headers['X-API-TOKEN']).first
 
-          if user
-            logger.info "LOGOUT MESSAGE: #{user.authentication_token}"
-            user.reset_authentication_token!
-            logger.info "LOGOUT MESSAGE: #{user.authentication_token}"
-            render :json => { :message => 'Session deleted.' }, :success => true, :status => 204
-          else
-            logger.info "LOGOUT MESSAGE: #{WE DIDNT MAKE IT}"
-            render :json => { :message => 'Invalid token.' }, :status => 404
-          end
-        }
-      end
+    #       if user
+    #         logger.info "LOGOUT MESSAGE: #{user.authentication_token}"
+    #         user.reset_authentication_token!
+    #         logger.info "LOGOUT MESSAGE: #{user.authentication_token}"
+    #         render :json => { :message => 'Session deleted.' }, :success => true, :status => 204
+    #       else
+    #         logger.info "LOGOUT MESSAGE: #{WE DIDNT MAKE IT}"
+    #         render :json => { :message => 'Invalid token.' }, :status => 404
+    #       end
+    #     }
+    #   end
+    # end
+
+    def destroy
+      sign_out(resource)
+      format.json {
+        render :json { :message => "probably wont work" }
+
+      }
     end
 
     protected
