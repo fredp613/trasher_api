@@ -51,6 +51,6 @@ class User < ActiveRecord::Base
   end
 
   def self.reset_authentication_token!
-    self.authentication_token = generate_authentication_token
+    self.authentication_token = self.generate_authentication_token
   end
 end

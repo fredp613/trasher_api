@@ -30,11 +30,11 @@ class ApplicationController < ActionController::Base
 
   def global_request_logging 
     logger.info "USERAGENT: #{request.headers['X-API-TOKEN']}"
-    begin 
-      yield 
-    ensure 
-      logger.info "response_status: #{response.status}"
-    end 
+    # begin 
+    #   yield 
+    # ensure 
+    #   logger.info "response_status: #{response.status}"
+    # end 
   end 
 
 end
