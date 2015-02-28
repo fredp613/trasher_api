@@ -28,7 +28,7 @@ Rails.application.configure do
   
 #ok so this line is the issue why remote links are triggered twice, the app.js file is also loaded in dev which triggers js actions twice 
 #since both jqery and app js are loaded.. so weird - to stop that, precompile your assets and change this to false
-  config.assets.debug = false
+  config.assets.debug = true
 
   # Asset digests allow you to set far-future HTTP expiration dates on all assets,
   # yet still be able to expire them through the digest params.
