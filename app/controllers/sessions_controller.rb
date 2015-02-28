@@ -4,7 +4,7 @@
 class SessionsController < Devise::SessionsController
   skip_before_filter :authenticate_user!, :only => [:create, :new, :destroy]
   # skip_before_filter :verify_signed_out_user, :only => [:destroy]
-  # skip_before_filter :authenticate_user_from_token!, :only => [:destroy]
+  skip_before_filter :authenticate_user_from_token!, :only => [:create, :new, :destroy]
   respond_to :json
 
     def new
