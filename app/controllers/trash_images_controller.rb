@@ -29,6 +29,10 @@ class TrashImagesController < ApplicationController
     @trash_image = TrashImage.new(trash_image_params)
     @trash_image.created_by = current_user.id
     @trash_image.updated_by = current_user.id 
+
+    image_file = change_img_params(params[:trash_image])
+
+
     respond_to do |format|
       if @trash_image.save
         format.html { redirect_to trash_images_url, notice: 'Trash image was successfully created.' }
@@ -74,5 +78,32 @@ class TrashImagesController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def trash_image_params
       params.require(:trash_image).permit(:trash_image, :trash_id, :name)
+    end
+
+    def change_img_params(img)
+      begin
+        Base64.decode64(img) #To check if thats a base64 string
+        if img
+          img = file_decode(img.split(',')[1],"some file name") #getting only the string leaving out the data/<format>
+        end
+      rescue Exception => e
+        img #Returning if its not a base64 string
+      end
+    end
+
+    def file_decode(base, filename)
+        file = Tempfile.new([file_base_name(filename), file_extn_name(filename)])
+        file.binmode
+        file.write(Base64.decode64(base))
+        file.close
+        file
+    end
+
+    def file_base_name(file_name)
+        File.basename(file_name, file_extn_name(file_name))
+    end
+
+    def file_extn_name(file_name)
+        File.extname(file_name)
     end
 end
