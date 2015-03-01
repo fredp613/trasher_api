@@ -10,5 +10,13 @@ class TrashImage < ActiveRecord::Base
 	self.remove_trash_image!
   end
 
+   def trash_image=(data)
+    # decode data and create stream on them
+    io = CarrierStringIO.new(Base64.decode64(data))
+
+    # this will do the thing (photo is mounted carrierwave uploader)
+    self.photo = io
+  end
+
 
 end
