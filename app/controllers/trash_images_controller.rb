@@ -1,6 +1,4 @@
- class FilelessIO < StringIO
-    attr_accessor :original_filename
-  end
+ 
 
 class TrashImagesController < ApplicationController
   before_action :set_trash_image, only: [:show, :edit, :update, :destroy]
@@ -30,16 +28,26 @@ class TrashImagesController < ApplicationController
   # POST /trash_images
   # POST /trash_images.json
   def create
+
+    # if params[:trash_image][:trash_image]
+          picture_path_params = params[:trash_image][:trash_image]
+          #create a new tempfile named fileupload
+          tempfile = Tempfile.new("fileupload")
+          tempfile.binmode
+          #get the file and decode it with base64 then write it to the tempfile
+          tempfile.write(Base64.decode64(picture_path_params["file"]))
+ 
+          #create a new uploaded file
+          uploaded_file = ActionDispatch::Http::UploadedFile.new(:tempfile => tempfile, :filename => params[:name], :original_filename => params[:name])
+ 
+          #replace picture_path with the new uploaded file
+          params[:trash_image][:trash_image] =  uploaded_file
+ 
+     # end
+
     @trash_image = TrashImage.new(trash_image_params)
     @trash_image.created_by = current_user.id
     @trash_image.updated_by = current_user.id 
-
-    
-    io = FilelessIO.new(Base64.decode64(params[:trash_image]))
-    io.original_filename = "foobar.png"
-    @trash_image.trash_image = io
-    
-
 
     respond_to do |format|
       if @trash_image.save
