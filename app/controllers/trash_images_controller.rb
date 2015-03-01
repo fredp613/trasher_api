@@ -27,22 +27,19 @@ class TrashImagesController < ApplicationController
   # POST /trash_images
   # POST /trash_images.json
   def create
-    
-   picture_path_param = params[:trash_image][:trash_image]
-   #create a new tempfile named fileupload
-   tempfile = Tempfile.new("fileupload")
-   tempfile.binmode
-   #get the file and decode it with base64 then write it to the tempfile
-   tempfile.write(Base64.decode64(picture_path_param))
+       picture_path_param = params[:trash_image]
+       #create a new tempfile named fileupload
+       tempfile = Tempfile.new("fileupload")
+       tempfile.binmode
+       #get the file and decode it with base64 then write it to the tempfile
+       tempfile.write(Base64.decode64(picture_path_param))
 
-   #create a new uploaded file
-   uploaded_file = ActionDispatch::Http::UploadedFile.new(:tempfile => tempfile, :filename => "testfile", :original_filename => "orginalfilename") 
+       #create a new uploaded file
+       uploaded_file = ActionDispatch::Http::UploadedFile.new(:tempfile => tempfile, :filename => "testfile", :original_filename => "orginalfilename") 
 
-   #replace picture_path with the new uploaded file
-   params[:trash_image][:trash_image] =  uploaded_file
-     
-      
-
+       #replace picture_path with the new uploaded file
+       params[:trash_image] =  uploaded_file
+   
     @trash_image = TrashImage.new(trash_image_params)
     @trash_image.created_by = current_user.id
     @trash_image.updated_by = current_user.id 
@@ -91,6 +88,9 @@ class TrashImagesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def trash_image_params
+
+     
+
       params.require(:trash_image).permit(:trash_image, :trash_id, :name)
     end
 
