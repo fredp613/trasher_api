@@ -15,7 +15,7 @@ class TrashImage < ActiveRecord::Base
     io = CarrierStringIO.new(Base64.decode64(data))
 
     # this will do the thing (photo is mounted carrierwave uploader)
-    self.photo = io
+    self.trash_image = io
   end
 
 
