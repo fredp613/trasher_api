@@ -38,9 +38,10 @@ class TrashImagesController < ApplicationController
        uploaded_file = ActionDispatch::Http::UploadedFile.new(:tempfile => tempfile, :filename => "testfile", :original_filename => "orginalfilename") 
 
        #replace picture_path with the new uploaded file
-       params[:trash_image][:trash_image] =  uploaded_file
+       # params[:trash_image][:trash_image] =  uploaded_file
    
     @trash_image = TrashImage.new(trash_image_params)
+    @trash_image.trash_image = uploaded_file
     @trash_image.created_by = current_user.id
     @trash_image.updated_by = current_user.id 
 
@@ -88,8 +89,6 @@ class TrashImagesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def trash_image_params
-
-     
 
       params.require(:trash_image).permit(:trash_image, :trash_id, :name)
     end
