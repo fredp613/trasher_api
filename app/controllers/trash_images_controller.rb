@@ -27,21 +27,8 @@ class TrashImagesController < ApplicationController
   # POST /trash_images
   # POST /trash_images.json
   def create
-       picture_path_param = params[:trash_image][:trash_image]
-       #create a new tempfile named fileupload
-       tempfile = Tempfile.new("fileupload")
-       tempfile.binmode
-       #get the file and decode it with base64 then write it to the tempfile
-       tempfile.write(Base64.decode64(picture_path_param))
-
-       #create a new uploaded file
-       uploaded_file = ActionDispatch::Http::UploadedFile.new(:tempfile => tempfile, :filename => "testfile", :original_filename => "orginalfilename") 
-
-       #replace picture_path with the new uploaded file
-       # params[:trash_image][:trash_image] =  uploaded_file
-   
+         
     @trash_image = TrashImage.new(trash_image_params)
-    @trash_image.trash_image = uploaded_file
     @trash_image.created_by = current_user.id
     @trash_image.updated_by = current_user.id 
 
@@ -90,33 +77,39 @@ class TrashImagesController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def trash_image_params
 
-      params.require(:trash_image).permit(:trash_image, :trash_id, :name)
+      the_params = params.require(:trash_image).permit(:trash_image, :trash_id, :name)
+      the_params[:trash_image] = parse_image_data(the_params[:trash_image]) if the_params[:trash_image]
+      the_params
     end
 
-    # def change_img_params(img)
-    #   begin
-    #     Base64.decode64(img) #To check if thats a base64 string
-    #     if img
-    #       img = file_decode(img.split(',')[1],"some file name") #getting only the string leaving out the data/<format>
-    #     end
-    #   rescue Exception => e
-    #     img #Returning if its not a base64 string
-    #   end
-    # end
-
-    # def file_decode(base, filename)
-    #     file = Tempfile.new([file_base_name(filename), file_extn_name(filename)])
-    #     file.binmode
-    #     file.write(Base64.decode64(base))
-    #     file.close
-    #     file
-    # end
-
-    # def file_base_name(file_name)
-    #     File.basename(file_name, file_extn_name(file_name))
-    # end
-
-    # def file_extn_name(file_name)
-    #     File.extname(file_name)
-    # end
+   def parse_image_data(base64_image)
+      filename = "upload-image"
+      in_content_type, encoding, string = base64_image.split(/[:;,]/)[1..3]
+   
+      @tempfile = Tempfile.new(filename)
+      @tempfile.binmode
+      @tempfile.write Base64.decode64(string)
+      @tempfile.rewind
+   
+      # for security we want the actual content type, not just what was passed in
+      content_type = `file --mime -b #{@tempfile.path}`.split(";")[0]
+   
+      # we will also add the extension ourselves based on the above
+      # if it's not gif/jpeg/png, it will fail the validation in the upload model
+      extension = content_type.match(/gif|jpeg|png/).to_s
+      filename += ".#{extension}" if extension
+   
+      ActionDispatch::Http::UploadedFile.new({
+        tempfile: @tempfile,
+        content_type: content_type,
+        filename: filename
+      })
+    end
+ 
+  def clean_tempfile
+    if @tempfile
+      @tempfile.close
+      @tempfile.unlink
+    end
+  end
 end
