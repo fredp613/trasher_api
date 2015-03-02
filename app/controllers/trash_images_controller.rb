@@ -36,7 +36,7 @@ class TrashImagesController < ApplicationController
           tempfile = Tempfile.new("fileupload")
           tempfile.binmode
           #get the file and decode it with base64 then write it to the tempfile
-          tempfile.write(Base64.decode64(picture_path_params["file"]))
+          tempfile.write(Base64.decode64(base64String))
  
           #create a new uploaded file
           uploaded_file = ActionDispatch::Http::UploadedFile.new(:tempfile => tempfile, :filename => "photo.jpeg", :original_filename => "someothername.jpeg")
