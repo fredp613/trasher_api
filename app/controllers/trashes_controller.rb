@@ -47,7 +47,7 @@ class TrashesController < ApplicationController
 
 
         format.html { redirect_to @trash, notice: 'Trash was successfully created.' }
-        format.json { render :show, status: :created, location: @trash }
+        format.json { render :show, status: :created, trash: @trash }
         # format.js
       else
         format.html { render :new }
