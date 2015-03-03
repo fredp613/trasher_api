@@ -5,8 +5,8 @@ class ApplicationController < ActionController::Base
   # In Rails 4.x:
   protect_from_forgery with: :null_session, :if => Proc.new { |c| c.request.format == 'application/json'}
 
-  before_filter :authenticate_user_from_token!
-  # before_filter :authenticate_user!
+  # before_filter :authenticate_user_from_token!
+  before_filter :authenticate_user!
   around_filter :global_request_logging
 
  

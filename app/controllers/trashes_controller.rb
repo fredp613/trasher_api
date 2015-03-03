@@ -33,8 +33,8 @@ class TrashesController < ApplicationController
      
     respond_to do |format|
       if @trash.save
-        # @trash.created_by = current_user.id
-        # @trash.updated_by = current_user.id         
+        @trash.created_by = current_user.id
+        @trash.updated_by = current_user.id         
         @temp_images = TempImage.find_by_temp_id(@trash.temp_id)
         unless @temp_images.blank?
           @temp_images.each do |ti|            
