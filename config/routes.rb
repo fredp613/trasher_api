@@ -12,6 +12,7 @@ Rails.application.routes.draw do
   # See how all your routes lay out with "rake routes".
 
   # You can have the root of your site routed with "root"
+  # match '/' => 'home#index',:via => [:get], constraints: { subdomain: /.+/ }
   root 'home#index'
 
   # Example of regular route:

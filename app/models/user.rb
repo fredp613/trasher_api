@@ -6,7 +6,7 @@ class User < ActiveRecord::Base
   has_many :trashes, dependent: :destroy
 
   devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :trackable, :validatable
+         :recoverable, :rememberable, :trackable, request_keys: [:subdomain]
 
   before_save :ensure_authentication_token!       
 
@@ -53,5 +53,9 @@ class User < ActiveRecord::Base
   def reset_authentication_token!
     self.authentication_token = generate_authentication_token
     self.save!
+  end
+
+   def self.find_for_authentication(warden_conditions)
+    where(:email => warden_conditions[:email], :subdomain => warden_conditions[:subdomain]).first
   end
 end
