@@ -7,7 +7,8 @@ class User < ActiveRecord::Base
 
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, request_keys: [:subdomain]
-
+  validates_uniqueness_of :email, :scope => :subdomain
+  
   before_save :ensure_authentication_token!       
 
   def self.find_by_email(email)
