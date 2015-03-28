@@ -9,6 +9,7 @@ class ApplicationController < ActionController::Base
   before_filter :authenticate_user_from_token!
   before_filter :authenticate_user!
   around_filter :global_request_logging
+  skip_before_filter  :verify_authenticity_token
 
  
  #  private
@@ -18,7 +19,6 @@ class ApplicationController < ActionController::Base
     user_auth_token = request.headers["X-API-TOKEN"].presence
     # user = User.find_by_email(user_email)
     user = User.find_by_authentication_token(user_auth_token)
-
     # Notice how we use Devise.secure_compare to compare the token
     # in the database with the token given in the params, mitigating
     # timing attacks.

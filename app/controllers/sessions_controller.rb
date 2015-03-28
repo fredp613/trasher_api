@@ -11,16 +11,18 @@ class SessionsController < Devise::SessionsController
 
 
     def new
-      self.resource = resource_class.new(sign_in_params)
-      clean_up_passwords(resource)
-      respond_with(resource, serialize_options(resource))
+      # logger.info "asdfasfasdfsafssfsadfasdfasfsadfsadfasfdafsasfd" 
+      # self.resource = resource_class.new(sign_in_params)
+      # clean_up_passwords(resource)
+      # respond_with(resource, serialize_options(resource))
+      super
     end
 
     def create
 
       respond_to do |format|
         format.html {
-          super         
+          super                   
         }
         format.json {
 
@@ -31,7 +33,8 @@ class SessionsController < Devise::SessionsController
           if resource.valid_password?(params[:user][:password])
             render :json => { user: { email: resource.email, :auth_token => resource.authentication_token } }, success: true, status: :created
           else            
-            invalid_login_attempt
+           invalid_login_attempt
+           logger.info "asdfasfasdfsafssfsadfasdfasfsadfsadfasfdafsasfd" 
           end
         }
       end
@@ -66,7 +69,7 @@ class SessionsController < Devise::SessionsController
     end
 
     def resource_from_credentials
-      data = { email: params[:user][:email], subdomain: "lvh" }
+      data = { email: params[:user][:email], subdomain: params[:user][:subdomain] }
       if res = resource_class.find_for_database_authentication(data)
         if res.valid_password?(params[:user][:password])
           res
