@@ -1,11 +1,15 @@
 
-# module Overrides
+
 
 class SessionsController < Devise::SessionsController
   skip_before_filter :authenticate_user!, :only => [:create, :new, :destroy]
   # skip_before_filter :verify_signed_out_user, :only => [:destroy]
   skip_before_filter :authenticate_user_from_token!, :only => [:create, :new, :destroy]
   respond_to :json
+
+  
+  
+  
 
     def new
       self.resource = resource_class.new(sign_in_params)
@@ -17,7 +21,7 @@ class SessionsController < Devise::SessionsController
 
       respond_to do |format|
         format.html {
-          super
+          super         
         }
         format.json {
 
@@ -55,7 +59,6 @@ class SessionsController < Devise::SessionsController
     end
 
    
-
     protected
     def invalid_login_attempt
       warden.custom_failure!
@@ -70,6 +73,10 @@ class SessionsController < Devise::SessionsController
         end
       end
     end
+
+
+
+
+
   end
 
-# end

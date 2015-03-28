@@ -2,9 +2,8 @@ class User < ActiveRecord::Base
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
   # acts_as_token_authenticatable
-
   has_many :trashes #, dependent: :destroy
-
+  attr_accessor :subdomain
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, request_keys: [:subdomain]
   validates_uniqueness_of :email, :scope => :subdomain
@@ -58,5 +57,6 @@ class User < ActiveRecord::Base
 
    def self.find_for_authentication(warden_conditions)
     where(:email => warden_conditions[:email], :subdomain => warden_conditions[:subdomain]).first
+    # where(:email => warden_conditions[:email])
   end
 end
