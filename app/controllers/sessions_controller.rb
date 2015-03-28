@@ -7,9 +7,7 @@ class SessionsController < Devise::SessionsController
   skip_before_filter :authenticate_user_from_token!, :only => [:create, :new, :destroy]
   respond_to :json
 
-  
-  skip_before_filter :verify_authenticity_token, :if => Proc.new { |c| c.request.format == 'application/json' }
-  
+
 
     def new
       self.resource = resource_class.new(sign_in_params)
@@ -52,6 +50,7 @@ class SessionsController < Devise::SessionsController
             logger.info "LOGOUT MESSAGE: #{user.authentication_token}"                      
           else
             logger.info "LOGOUT MESSAGE: we didnt make it"
+            # invalid_login_attempt
             render :json => { :state_code => 1, :message => 'Something went wrong, please contact support.' }, :status => 404
           end
         }
