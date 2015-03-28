@@ -2,7 +2,7 @@
 
 
 class SessionsController < Devise::SessionsController
-  
+  before_filter :configure_permitted_parameters
   skip_before_filter :authenticate_user!, :only => [:create, :new, :destroy]
   skip_before_filter :verify_signed_out_user, :only => [:destroy]
   skip_before_filter :authenticate_user_from_token!, :only => [:create, :new, :destroy]
@@ -66,12 +66,17 @@ class SessionsController < Devise::SessionsController
     end
 
     def resource_from_credentials
-      data = { email: params[:user][:email] }
+      data = { email: params[:user][:email], subdomain: "lvh" }
       if res = resource_class.find_for_database_authentication(data)
         if res.valid_password?(params[:user][:password])
           res
         end
       end
+    end
+
+
+    def configure_permitted_parameters
+      devise_parameter_sanitizer.for(:sign_in).push(:subdomain)
     end
 
   

@@ -3,7 +3,6 @@ class User < ActiveRecord::Base
   # :confirmable, :lockable, :timeoutable and :omniauthable
   # acts_as_token_authenticatable
   has_many :trashes #, dependent: :destroy
-  
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, request_keys: [:subdomain]
   validates_uniqueness_of :email, :scope => :subdomain
@@ -11,11 +10,11 @@ class User < ActiveRecord::Base
   before_save :ensure_authentication_token!       
 
   def self.find_by_email(email)
-  	current_user = User.where(email: email)
+  	current_user = User.where(email: email).first
   end
 
   def self.find_by_authentication_token(token)
-    current_user = User.where(authentication_token: token)
+    current_user = User.where(authentication_token: token).first
   end
      
   def generate_secure_token_string
@@ -30,7 +29,7 @@ class User < ActiveRecord::Base
   end
 
   def password_presence
-    password.present? && password_confirmation.present?
+    password.present?   && password_confirmation.present?
   end
 
   def password_match

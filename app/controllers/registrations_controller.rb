@@ -1,4 +1,5 @@
 class RegistrationsController < Devise::RegistrationsController
+before_filter :configure_permitted_parameters
 skip_before_filter :authenticate_user_from_token!, :only => [:create, :new]
 skip_before_filter :authenticate_user!, :only => [:create, :new]
  respond_to :json
@@ -21,6 +22,10 @@ skip_before_filter :authenticate_user!, :only => [:create, :new]
 
     def sign_up_params_json
     	params.require(:user).permit(:email, :password, :password_confirmation, :subdomain)
+    end
+
+     def configure_permitted_parameters
+      devise_parameter_sanitizer.for(:sign_up).push(:subdomain)
     end
 
 

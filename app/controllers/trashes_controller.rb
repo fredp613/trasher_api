@@ -1,7 +1,7 @@
 class TrashesController < ApplicationController
   before_action :set_trash, only: [:show, :edit, :update, :destroy]
-  skip_before_filter :authenticate_user!, only: [:index, :show]
   skip_before_filter :authenticate_user_from_token!, only: [:index, :show]
+  skip_before_filter :authenticate_user!, only: [:index, :show]
 
 
   
