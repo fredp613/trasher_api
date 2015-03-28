@@ -11,7 +11,7 @@ class User < ActiveRecord::Base
   before_save :ensure_authentication_token!       
 
   def self.find_by_email(email)
-  	current_user = User.where(email: email)
+  	current_user = User.where(email: email).first
   end
 
   def self.find_by_authentication_token(token)
