@@ -45,7 +45,7 @@ class SessionsController < Devise::SessionsController
           super
         }
         format.json {
-          user = User.find_by_authentication_token(request.headers['X-API-TOKEN']).first
+          user = User.find_by_authentication_token(request.headers['X-API-TOKEN'])
 
           if user
             user.reset_authentication_token!
