@@ -4,7 +4,7 @@ class User < ActiveRecord::Base
   # acts_as_token_authenticatable
   has_many :trashes #, dependent: :destroy
   devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :trackable, request_keys: [:subdomain]
+         :recoverable, :rememberable, :trackable, :authenticatable, request_keys: [:subdomain]
   validates_uniqueness_of :email, :scope => :subdomain
   
   before_save :ensure_authentication_token!       
