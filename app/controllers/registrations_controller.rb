@@ -20,7 +20,7 @@ skip_before_filter :authenticate_user!, :only => [:create, :new]
     end
 
     def sign_up_params_json
-    	params.require(:user).permit(:email, :password, :password_confirmation)
+    	params.require(:user).permit(:email, :password, :password_confirmation, :subdomain)
     end
 
 

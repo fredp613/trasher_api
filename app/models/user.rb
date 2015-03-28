@@ -3,7 +3,7 @@ class User < ActiveRecord::Base
   # :confirmable, :lockable, :timeoutable and :omniauthable
   # acts_as_token_authenticatable
   has_many :trashes #, dependent: :destroy
-  attr_accessor :subdomain
+  
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, request_keys: [:subdomain]
   validates_uniqueness_of :email, :scope => :subdomain
