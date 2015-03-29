@@ -43,6 +43,7 @@ class SessionsController < Devise::SessionsController
 
           if user
             user.reset_authentication_token!
+            signed_out = (Devise.sign_out_all_scopes ? sign_out : sign_out(resource_name))
             render :json => { :state_code => 0, :new_user_token => user.authentication_token }, :success => true, :status => 200            
             logger.info "LOGOUT MESSAGE: #{user.authentication_token}"                      
           else
