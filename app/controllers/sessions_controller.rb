@@ -8,13 +8,7 @@ class SessionsController < Devise::SessionsController
   skip_before_filter :authenticate_user_from_token!, :only => [:create, :new, :destroy]
   respond_to :json
 
-
-
-    def new
-      # logger.info "asdfasfasdfsafssfsadfasdfasfsadfsadfasfdafsasfd" 
-      # self.resource = resource_class.new(sign_in_params)
-      # clean_up_passwords(resource)
-      # respond_with(resource, serialize_options(resource))
+    def new     
       super
     end
 
@@ -24,8 +18,7 @@ class SessionsController < Devise::SessionsController
         format.html {
           super                   
         }
-        format.json {
-
+        format.json {          
           resource = resource_from_credentials
           #build_resource
           return invalid_login_attempt unless resource
