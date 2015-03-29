@@ -24,6 +24,7 @@ class SessionsController < Devise::SessionsController
           return invalid_login_attempt unless resource
 
           if resource.valid_password?(params[:user][:password])
+            sign_in(resource_name, resource)  
             render :json => { user: { email: resource.email, :auth_token => resource.authentication_token } }, success: true, status: :created
           else            
            invalid_login_attempt           
@@ -61,7 +62,7 @@ class SessionsController < Devise::SessionsController
     end
 
     def resource_from_credentials
-      # use this for subdomain: data = { email: params[:user][:email], subdomain: params[:user][:subdomain] }
+      # use this for subdomain (api): data = { email: params[:user][:email], subdomain: params[:user][:subdomain] }
       data = { email: params[:user][:email] }
       if res = resource_class.find_for_database_authentication(data)
         if res.valid_password?(params[:user][:password])
