@@ -6,8 +6,8 @@ class User < ActiveRecord::Base
 
   has_many :trashes #, dependent: :destroy
   devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :trackable, :authenticatable, authentication_keys: [:email,:subdomain]
-  validates_uniqueness_of :email, :scope => :subdomain
+         :recoverable, :rememberable, :trackable #add the commentted sections later if you want custom subdomains, :authenticatable, authentication_keys: [:email]
+  validates_uniqueness_of :email #, :scope => :subdomain
  
   before_save :ensure_authentication_token!       
 
@@ -56,9 +56,7 @@ class User < ActiveRecord::Base
     self.save!
   end
 
-  def self.find_for_authentication(warden_conditions)
-    where(:email => warden_conditions[:email], :subdomain => warden_conditions[:subdomain]).first
-    # conditions = warden_conditions.dup
-    # logger.info "ASFADSFDSFADSFASFDFASDF #{conditions}"
-  end
+  # def self.find_for_authentication(warden_conditions)
+  #   where(:email => warden_conditions[:email], :subdomain => warden_conditions[:subdomain]).first    
+  # end
 end
