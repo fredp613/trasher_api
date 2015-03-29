@@ -61,7 +61,8 @@ class SessionsController < Devise::SessionsController
     end
 
     def resource_from_credentials
-      data = { email: params[:user][:email], subdomain: params[:user][:subdomain] }
+      # use this for subdomain: data = { email: params[:user][:email], subdomain: params[:user][:subdomain] }
+      data = { email: params[:user][:email] }
       if res = resource_class.find_for_database_authentication(data)
         if res.valid_password?(params[:user][:password])
           res
