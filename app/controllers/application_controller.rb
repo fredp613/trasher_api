@@ -9,7 +9,7 @@ class ApplicationController < ActionController::Base
   before_filter :authenticate_user_from_token!
   before_filter :authenticate_user!
   around_filter :global_request_logging
-  # skip_before_filter  :verify_authenticity_token
+  skip_before_filter  :verify_authenticity_token
 
  
  #  private
