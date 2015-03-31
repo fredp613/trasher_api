@@ -37,10 +37,8 @@ class TrashImagesController < ApplicationController
           tempfile.binmode
           #get the file and decode it with base64 then write it to the tempfile
           tempfile.write(Base64.decode64(base64String))
- 
           #create a new uploaded file
-          uploaded_file = ActionDispatch::Http::UploadedFile.new(:tempfile => tempfile, :filename => "photo.jpeg", :original_filename => "someothername.jpeg")
- 
+          uploaded_file = ActionDispatch::Http::UploadedFile.new(:tempfile => tempfile, :filename => "photo.jpeg", :original_filename => "someothername.jpeg") 
           #replace picture_path with the new uploaded file
           @trash_image.trash_image =  uploaded_file
     end
@@ -79,8 +77,11 @@ class TrashImagesController < ApplicationController
   def destroy
     @trash_image.destroy
     respond_to do |format|
-      format.html { redirect_to trash_images_url, notice: 'Trash image was successfully destroyed.' }
+      # format.html { redirect_to trash_images_url, notice: 'Trash image was successfully destroyed.' }
       format.json { head :no_content }
+      # @trash_images = TrashImage.find_by_trash_id(@trash_image.trash_id)
+      @trash = Trash.find(@trash_image.trash_id)
+      format.js
     end
   end
 

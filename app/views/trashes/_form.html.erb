@@ -39,27 +39,20 @@
   </div>
 <% end %>
 
-<% if @trash.new_record? %>
-
-    <%= form_for TempImage.new, remote: true do |ti|  %>
-        <%= ti.text_field :temp_id, value: @trash.temp_id %>
-        <%= ti.file_field :image, multiple: true, name: "temp_image[image]" %>
-        <%#= ti.submit  %>
-    <% end %>
-
-    <div id="temp_images">
-      <%= render "temp_images/images" %>    
-    </div>
-
-  <% else %>
-
-    <% @trash.trash_images.each do |ti| %>
-      <%= image_tag ti.trash_image_url(:main).to_s %>
-    <% end %>
-
+  <% unless @trash.new_record? %>                  
+       <div id="trash_images">
+          <%= render "trash_images/images" %>
+     </div>
   <% end %>
 
+   <%= form_for TempImage.new, remote: true do |ti|  %>
+      <%= ti.hidden_field :temp_id, value: @trash.temp_id %>
+      <label>Add File(s)</label> <%= ti.file_field :image, multiple: true, name: "temp_image[image]" %>        
+  <% end %>
 
+   <div id="temp_images">
+      <%= render "temp_images/images" %>    
+   </div>
 
 
 <script type="text/javascript">

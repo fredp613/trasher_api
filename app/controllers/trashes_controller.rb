@@ -1,9 +1,7 @@
 class TrashesController < ApplicationController
   before_action :set_trash, only: [:show, :edit, :update, :destroy]
-  skip_before_filter :authenticate_user_from_token!, only: [:index, :show]
   skip_before_filter :authenticate_user!, only: [:index, :show]
-
-
+  skip_before_filter :authenticate_user_from_token!, only: [:index, :show]
   
   # GET /trashes
   # GET /trashes.json
@@ -35,16 +33,8 @@ class TrashesController < ApplicationController
       if @trash.save
         @trash.created_by = current_user.id
         @trash.updated_by = current_user.id         
-        @temp_images = TempImage.find_by_temp_id(@trash.temp_id)
-        unless @temp_images.blank?
-          @temp_images.each do |ti|            
-            @trash.trash_images.create(trash_image: ti.image, name: ti.name)                  
-          end
-          @temp_images.each do |ti|
-            ti.destroy
-          end
-        end
-
+        
+        toggle_temp_images
 
         format.html { redirect_to @trash, notice: 'Trash was successfully created.' }
         format.json { render :show, status: :created, trash: @trash }
@@ -62,6 +52,11 @@ class TrashesController < ApplicationController
     @trash.updated_by = current_user
     respond_to do |format|
       if @trash.update(trash_params)
+
+        @trash.updated_by = current_user.id         
+       
+        toggle_temp_images
+
         format.html { redirect_to @trash, notice: 'Trash was successfully updated.' }
         format.json { render :show, status: :ok, location: @trash }
       else
@@ -71,9 +66,7 @@ class TrashesController < ApplicationController
     end
   end
 
-  def create_temp_image
-    TempImage.create(params[:temp_image])
-  end
+
 
   # DELETE /trashes/1
   # DELETE /trashes/1.json
@@ -95,4 +88,19 @@ class TrashesController < ApplicationController
     def trash_params
       params.require(:trash).permit(:title, :description, :catetory_id, :trash_type, :images, :temp_id)
     end
+
+    
+
+  def toggle_temp_images
+    @temp_images = TempImage.find_by_temp_id(@trash.temp_id)
+    unless @temp_images.blank?
+      @temp_images.each do |ti|            
+        @trash.trash_images.create(trash_image: ti.image, name: ti.name)                  
+      end
+      @temp_images.each do |ti|
+        ti.destroy
+      end
+    end
+  end
+
 end
