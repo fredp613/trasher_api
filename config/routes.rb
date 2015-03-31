@@ -4,7 +4,11 @@ Rails.application.routes.draw do
 
   resources :trash_images
   
-  resources :trashes 
+  resources :trashes do 
+    collection do
+      get "user_index"
+    end    
+  end
   
   resources :categories
 

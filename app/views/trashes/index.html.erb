@@ -17,15 +17,12 @@
   </thead>
 
   <tbody>
-    <% @trashes.each do |trash| %>
+    <% @trash.each do |trash| %>
       <tr>
         <td><%= trash.title %></td>
         <td><%= trash.description %></td>
         <td><%= trash.catetory_id %></td>
-        <td><%= trash.trash_type %></td>
-        <td><%= link_to 'Show', trash %></td>
-        <td><%= link_to 'Edit', edit_trash_path(trash) %></td>
-        <td><%= link_to 'Destroy', trash, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= trash.trash_type %></td>       
       </tr>
     <% end %>
   </tbody>
@@ -33,4 +30,6 @@
 
 <br>
 
+
 <%= link_to 'New Trash', new_trash_path %>
+

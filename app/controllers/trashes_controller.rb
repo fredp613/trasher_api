@@ -1,12 +1,16 @@
 class TrashesController < ApplicationController
   before_action :set_trash, only: [:show, :edit, :update, :destroy]
   skip_before_filter :authenticate_user!, only: [:index, :show]
-  skip_before_filter :authenticate_user_from_token!, only: [:index, :show]
+  skip_before_filter :authenticate_user_from_token!, only: [:index, :show]  
   
   # GET /trashes
   # GET /trashes.json
   def index
-    @trashes = Trash.all
+    @trash = Trash.all
+  end
+
+  def user_index
+    @trash = Trash.where(created_by: current_user.id)
   end
 
   # GET /trashes/1
@@ -28,14 +32,12 @@ class TrashesController < ApplicationController
   # POST /trashes.json
   def create
     @trash = Trash.new(trash_params) 
+    @trash.created_by = current_user.id
+    @trash.updated_by = current_user.id  
      
     respond_to do |format|
-      if @trash.save
-        @trash.created_by = current_user.id
-        @trash.updated_by = current_user.id         
-        
+      if @trash.save                       
         toggle_temp_images
-
         format.html { redirect_to @trash, notice: 'Trash was successfully created.' }
         format.json { render :show, status: :created, trash: @trash }
         # format.js
@@ -49,14 +51,10 @@ class TrashesController < ApplicationController
   # PATCH/PUT /trashes/1
   # PATCH/PUT /trashes/1.json
   def update
-    @trash.updated_by = current_user
+    @trash.updated_by = current_user.id
     respond_to do |format|
-      if @trash.update(trash_params)
-
-        @trash.updated_by = current_user.id         
-       
+      if @trash.update(trash_params)       
         toggle_temp_images
-
         format.html { redirect_to @trash, notice: 'Trash was successfully updated.' }
         format.json { render :show, status: :ok, location: @trash }
       else
