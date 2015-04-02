@@ -1,12 +1,18 @@
 class TrashesController < ApplicationController
   before_action :set_trash, only: [:show, :edit, :update, :destroy]
   skip_before_filter :authenticate_user!, only: [:index, :show]
-  skip_before_filter :authenticate_user_from_token!, only: [:index, :show]  
-  
+  skip_before_filter :authenticate_user_from_token!, only: [:index, :show] 
   # GET /trashes
   # GET /trashes.json
   def index
     @trash = Trash.all
+
+    respond_to do |format|
+      format.html { render :index }
+      format.json { render json: @trash }
+    end
+
+    
   end
 
   def user_index
