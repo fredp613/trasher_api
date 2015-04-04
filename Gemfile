@@ -56,5 +56,6 @@ gem 'redcarpet'
 gem 'kaminari'
 gem 'devise'
 gem 'figaro'
+gem 'foundation-rails'
 gem 'simple_token_authentication', '~> 1.0'
 
