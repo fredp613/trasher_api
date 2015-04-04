@@ -4,5 +4,13 @@ class Trash < ActiveRecord::Base
 
 	has_many :trash_images, dependent: :destroy
 	attr_accessor :temp_id
+
+	def self.rid
+		where(:trash_type => true)
+	end
+
+	def self.wanted
+		where(:trash_type => false)
+	end
 	
 end

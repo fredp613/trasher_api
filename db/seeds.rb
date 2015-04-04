@@ -8,26 +8,27 @@
 
 require 'securerandom'
 
+u = User.first
+
 40.times do |i|
   Trash.create(
   	title: "my title #{SecureRandom.hex(2)}",
   	description: "Lorem ipsum Anim in sit mollit cupidatat laborum incididunt qui ex cillum proident laborum est eiusmod consequat labore laboris elit ea veniam do fugiat nulla Excepteur est proident aliquip eiusmod labore Excepteur do esse nulla fugiat dolore.",
   	catetory_id: 7, 
-  	created_by: 97,
-  	updated_by: 97,
+  	created_by: u.id,
+  	updated_by: u.id,
   	trash_type: false
   )
 
 end
-
 
 40.times do |i|
   Trash.create(
   	title: "my title #{SecureRandom.hex(2)}",
   	description: "Lorem ipsum Anim in sit mollit cupidatat laborum incididunt qui ex cillum proident laborum est eiusmod consequat labore laboris elit ea veniam do fugiat nulla Excepteur est proident aliquip eiusmod labore Excepteur do esse nulla fugiat dolore.",
   	catetory_id: 6, 
-  	created_by: 97,
-  	updated_by: 97,
+  	created_by: u.id,
+  	updated_by: u.id,
   	trash_type: true
   )
 
