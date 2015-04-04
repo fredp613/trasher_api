@@ -1,0 +1,9 @@
+// $('#trashes').append('<%= j render(@trash) %>')
+// $('.pagination').replaceWith('<%= j paginate(@trash) %>')
+
+$('#trashes').append('<%= j render(@trash) %>');
+<% if @trash.next_page %>
+  $('.pagination').replaceWith('<%= j paginate(@trash) %>');
+<% else %>
+  $('.pagination').remove();
+<% end %>

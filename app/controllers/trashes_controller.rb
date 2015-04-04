@@ -5,14 +5,13 @@ class TrashesController < ApplicationController
   # GET /trashes
   # GET /trashes.json
   def index
-    @trash = Trash.all
+    @trash = Trash.order(:created_at).page(params[:page]).per(20)
 
     respond_to do |format|
       format.html { render :index }
       format.json { render json: @trash }
-    end
-
-    
+      format.js
+    end   
   end
 
   def user_index
@@ -70,8 +69,6 @@ class TrashesController < ApplicationController
     end
   end
 
-
-
   # DELETE /trashes/1
   # DELETE /trashes/1.json
   def destroy
@@ -92,8 +89,6 @@ class TrashesController < ApplicationController
     def trash_params
       params.require(:trash).permit(:title, :description, :catetory_id, :trash_type, :images, :temp_id)
     end
-
-    
 
   def toggle_temp_images
     @temp_images = TempImage.find_by_temp_id(@trash.temp_id)

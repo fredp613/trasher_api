@@ -12,9 +12,9 @@
 //
 //= require jquery
 //= require jquery_ujs
-//= require foundation
 //= require jquery-ui
 //= require jquery-fileupload/basic
+//= require foundation
 //= require turbolinks
 //= require_tree .
 

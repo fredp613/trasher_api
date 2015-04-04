@@ -1,0 +1,8 @@
+
+<div class="trash">
+  <h2><%= link_to trash.title, trash, :class=>"subheader" %></h2>
+  <div class="details">
+    Created at: <%= trash.created_at.strftime("%B %e, %Y") %> |
+    Created by: <%= trash.created_by %>
+  </div>
+</div>

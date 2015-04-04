@@ -14,17 +14,17 @@
 
   <body>
 
-  <div>
+  <div class="row columns">
+
     <% if user_signed_in? %>
         <strong><%= current_user.email %></strong>
           <%= link_to "Log out", destroy_user_session_path, :method => :delete %>
     <% end %>
-  </div>
 
- <p class="notice"><%= notice %></p>
-  <p class="alert"><%= alert %></p>
-
+    <p class="notice"><%= notice %></p>
+    <p class="alert"><%= alert %></p>
     <%= yield %>
+  </div>
 
   </body>
 </html>
