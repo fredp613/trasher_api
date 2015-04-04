@@ -15,7 +15,7 @@ require 'securerandom'
   	catetory_id: 7, 
   	created_by: 97,
   	updated_by: 97,
-  	trash_type: 0
+  	trash_type: false
   )
 
 end
@@ -28,7 +28,7 @@ end
   	catetory_id: 6, 
   	created_by: 97,
   	updated_by: 97,
-  	trash_type: 1
+  	trash_type: true
   )
 
 end
