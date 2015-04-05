@@ -8,12 +8,12 @@ class TrashesController < ApplicationController
     
     if params[:trash_type]
       if params[:trash_type] == "Wanted"
-        @trash = Trash.wanted.order(:created_at).page(params[:page]).per(10)
+        @trash = Trash.wanted.order(:created_at).page(params[:page]).per(20)
       else
-        @trash = Trash.rid.order(:created_at).page(params[:page]).per(10)
+        @trash = Trash.rid.order(:created_at).page(params[:page]).per(20)
       end
     else
-        @trash = Trash.wanted.order(:created_at).page(params[:page]).per(10)
+        @trash = Trash.wanted.order(:created_at).page(params[:page]).per(20)
     end
    
     respond_to do |format|
@@ -26,12 +26,12 @@ class TrashesController < ApplicationController
   def search_api 
     if params[:trash][:trash_type]
       if params[:trash][:trash_type] == "Wanted"
-        @trash = Trash.wanted.order(:created_at).page(params[:page]).per(10)
+        @trash = Trash.wanted.order(:created_at).page(params[:page]).per(20)
       else
-        @trash = Trash.rid.order(:created_at).page(params[:page]).per(10)
+        @trash = Trash.rid.order(:created_at).page(params[:page]).per(20)
       end
     else
-        @trash = Trash.wanted.order(:created_at).page(params[:page]).per(5)
+        @trash = Trash.wanted.order(:created_at).page(params[:page]).per(20)
     end
     respond_to do |format|
       # format.html { render :index }

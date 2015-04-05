@@ -14,12 +14,32 @@
 //= require jquery_ujs
 //= require jquery-ui
 //= require jquery-fileupload/basic
-//= require foundation
+//= require foundation/foundation
+//= require foundation/foundation.alert
+//= require foundation/foundation.accordion
+//= require foundation/foundation.clearing
+//= require foundation/foundation.dropdown
+//= require foundation/foundation.equalizer
+//= require foundation/foundation.interchange
+//= require foundation/foundation.joyride
+//= require foundation/foundation.orbit
+//= require foundation/foundation.reveal
+//= require foundation/foundation.slider
+//= require foundation/foundation.tab
+//= require foundation/foundation.tooltip
+//= require foundation/foundation.topbar
+//= require foundation/foundation.offcanvas
 //= require turbolinks
 //= require_tree .
 
 
 
 
+// jQuery(document).foundation();
 
-$(function(){ $(document).foundation(); });
+// $(function(){ 
+// 	jQuery.noConflict();
+	$(document).foundation(); 
+// 	jQuery(document).foundation();
+
+// });
