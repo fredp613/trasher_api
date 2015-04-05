@@ -6,10 +6,11 @@ Rails.application.routes.draw do
   
   resources :trashes do 
     collection do
-      get "user_index"
+      get "user_index"  
+      post "search_api"    
     end    
   end
-  
+
   resources :categories
 
   # The priority is based upon order of creation: first created -> highest priority.

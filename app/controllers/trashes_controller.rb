@@ -1,10 +1,11 @@
 class TrashesController < ApplicationController
   before_action :set_trash, only: [:show, :edit, :update, :destroy]
-  skip_before_filter :authenticate_user!, only: [:index, :show]
-  skip_before_filter :authenticate_user_from_token!, only: [:index, :show] 
+  skip_before_filter :authenticate_user!, only: [:index, :search, :show]
+  skip_before_filter :authenticate_user_from_token!, only: [:index, :search, :show] 
   # GET /trashes
   # GET /trashes.json
   def index
+    
     if params[:trash_type]
       if params[:trash_type] == "Wanted"
         @trash = Trash.wanted.order(:created_at).page(params[:page]).per(10)
@@ -12,14 +13,32 @@ class TrashesController < ApplicationController
         @trash = Trash.rid.order(:created_at).page(params[:page]).per(10)
       end
     else
-        @trash = Trash.wanted.order(:created_at).page(params[:page]).per(5)
+        @trash = Trash.wanted.order(:created_at).page(params[:page]).per(10)
     end
-
+   
     respond_to do |format|
-      format.html { render :index }
+      format.html { }
       format.json { render json: @trash }
       format.js
     end   
+  end
+
+  def search_api 
+    if params[:trash][:trash_type]
+      if params[:trash][:trash_type] == "Wanted"
+        @trash = Trash.wanted.order(:created_at).page(params[:page]).per(10)
+      else
+        @trash = Trash.rid.order(:created_at).page(params[:page]).per(10)
+      end
+    else
+        @trash = Trash.wanted.order(:created_at).page(params[:page]).per(5)
+    end
+    respond_to do |format|
+      # format.html { render :index }
+      format.json { render json: @trash }
+      # format.js
+    end 
+
   end
 
   def user_index
@@ -92,6 +111,11 @@ class TrashesController < ApplicationController
     def set_trash
       @trash = Trash.find(params[:id])
     end
+
+
+    def set_trash_collection
+    end
+
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def trash_params
