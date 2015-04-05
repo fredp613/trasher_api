@@ -5,10 +5,14 @@ class TrashesController < ApplicationController
   # GET /trashes
   # GET /trashes.json
   def index
-    if params[:trash_type] == "Wanted"
-      @trash = Trash.wanted.order(:created_at).page(params[:page]).per(10)
+    if params[:trash_type]
+      if params[:trash_type] == "Wanted"
+        @trash = Trash.wanted.order(:created_at).page(params[:page]).per(10)
+      else
+        @trash = Trash.rid.order(:created_at).page(params[:page]).per(10)
+      end
     else
-      @trash = Trash.rid.order(:created_at).page(params[:page]).per(10)
+        @trash = Trash.wanted.order(:created_at).page(params[:page]).per(5)
     end
 
     respond_to do |format|
