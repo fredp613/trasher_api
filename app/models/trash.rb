@@ -13,5 +13,8 @@ class Trash < ActiveRecord::Base
 		where(:trash_type => false)
 	end
 
+	def first_image
+		self.trash_images.first
+	end
 	
 end

@@ -29,7 +29,7 @@ class TrashesController < ApplicationController
     @trash = @wanted_trash + @rid_trash
 
     respond_to do |format|      
-      format.json { render json: @trash }      
+      format.json { render json: @trash, :include => :first_image }      
     end 
 
   end
