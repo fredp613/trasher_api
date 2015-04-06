@@ -13,30 +13,20 @@ class TrashesController < ApplicationController
         @trash = Trash.rid.order(:created_at).page(params[:page]).per(20)
       end
     else
-        @trash = Trash.rid.order(:created_at).page(params[:page]).per(20) +  Trash.wanted.order(:created_at).page(params[:page]).per(20)
+      @trash = Trash.wanted.order(:created_at).page(params[:page]).per(20)        
     end
    
     respond_to do |format|
       format.html { }
-      format.json { render json: @trash }
+      format.json { render json: @trash, include: trash_images }
       format.js
     end   
   end
 
-  def search_api 
-    if params[:trash][:trash_type]
-      if params[:trash][:trash_type] == "Wanted"
-        @trash = Trash.wanted.order(:created_at).page(params[:page]).per(20)
-      else
-        @trash = Trash.rid.order(:created_at).page(params[:page]).per(20)
-      end
-    else
-        @trash = Trash.wanted.order(:created_at).page(params[:page]).per(20)
-    end
-    respond_to do |format|
-      # format.html { render :index }
-      format.json { render json: @trash }
-      # format.js
+  def index_api 
+    @trash = Trash.rid.order(:created_at).page(params[:page]).per(20) +  Trash.wanted.order(:created_at).page(params[:page]).per(20)
+    respond_to do |format|      
+      format.json { render json: @trash }      
     end 
 
   end

@@ -7,7 +7,7 @@ Rails.application.routes.draw do
   resources :trashes do 
     collection do
       get "user_index"  
-      post "search_api"    
+      get "index_api"    
     end    
   end
 
