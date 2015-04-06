@@ -12,5 +12,6 @@ class Trash < ActiveRecord::Base
 	def self.wanted
 		where(:trash_type => false)
 	end
+
 	
 end

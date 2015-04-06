@@ -18,13 +18,16 @@ class TrashesController < ApplicationController
    
     respond_to do |format|
       format.html { }
-      format.json { render json: @trash, include: trash_images }
+      format.json { render json: @trash }
       format.js
     end   
   end
 
   def index_api 
-    @trash = Trash.rid.order(:created_at).page(params[:page]).per(20) +  Trash.wanted.order(:created_at).page(params[:page]).per(20)
+    @wanted_trash = Trash.wanted.order(:created_at).page(params[:page]).per(20)
+    @rid_trash = Trash.rid.order(:created_at).page(params[:page]).per(20)
+    @trash = @wanted_trash + @rid_trash
+
     respond_to do |format|      
       format.json { render json: @trash }      
     end 
