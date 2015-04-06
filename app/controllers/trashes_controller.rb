@@ -13,7 +13,7 @@ class TrashesController < ApplicationController
         @trash = Trash.rid.order(:created_at).page(params[:page]).per(20)
       end
     else
-        @trash = Trash.wanted.order(:created_at).page(params[:page]).per(20)
+        @trash = Trash.rid.order(:created_at).page(params[:page]).per(20) +  Trash.wanted.order(:created_at).page(params[:page]).per(20)
     end
    
     respond_to do |format|
