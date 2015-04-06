@@ -13,6 +13,10 @@ class TrashImage < ActiveRecord::Base
 		self.remove_trash_image!
   end
 
+  def self.for_trash(trash)
+    where(trash_id: trash)
+  end
+
   # def image_data=(data)
   #   # decode data and create stream on them
   #   io = CarrierStringIO.new(Base64.decode64(data))

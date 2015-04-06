@@ -7,7 +7,12 @@ class TrashImagesController < ApplicationController
   # GET /trash_images
   # GET /trash_images.json
   def index
-    @trash_images = TrashImage.all
+    if params[:trash_id]
+      @trash_images = TrashImage.for_trash(params[:trash_id])
+    else
+      @trash_images = TrashImage.all.limit(10)
+    end
+
   end
 
   # GET /trash_images/1
