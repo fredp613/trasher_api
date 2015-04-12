@@ -35,7 +35,17 @@ class TrashesController < ApplicationController
   end
 
   def user_index
+    user_auth_token = request.headers["X-API-TOKEN"].presence
+    if user_auth_token
+      current_user = User.find_by_authentication_token(user_auth_token)
+    end
+
     @trash = Trash.where(created_by: current_user.id)
+    respond_to do |format|
+      format.html { }
+      format.json { render json: @trash }
+      format.js
+    end
   end
 
   # GET /trashes/1
@@ -62,7 +72,7 @@ class TrashesController < ApplicationController
      
     respond_to do |format|
       if @trash.save                       
-        toggle_temp_images
+        toggle_temp_images #unless params[:trash][:temp_id].blank?
         format.html { redirect_to @trash, notice: 'Trash was successfully created.' }
         format.json { render :show, status: :created, trash: @trash }
         # format.js
@@ -79,7 +89,7 @@ class TrashesController < ApplicationController
     @trash.updated_by = current_user.id
     respond_to do |format|
       if @trash.update(trash_params)       
-        toggle_temp_images
+        toggle_temp_images #unless params[:trash][:temp_id].blank?
         format.html { redirect_to @trash, notice: 'Trash was successfully updated.' }
         format.json { render :show, status: :ok, location: @trash }
       else
@@ -126,5 +136,4 @@ class TrashesController < ApplicationController
       end
     end
   end
-
 end

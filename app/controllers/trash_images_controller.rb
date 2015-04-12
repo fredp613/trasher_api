@@ -12,7 +12,6 @@ class TrashImagesController < ApplicationController
     else
       @trash_images = TrashImage.all.limit(10)
     end
-
   end
 
   # GET /trash_images/1
@@ -35,17 +34,17 @@ class TrashImagesController < ApplicationController
          
     @trash_image = TrashImage.new(trash_image_params)
 
-     if params[:trash_image][:temp_image]
-          base64String = params[:trash_image][:temp_image]
-          #create a new tempfile named fileupload
-          tempfile = Tempfile.new("fileupload")
-          tempfile.binmode
-          #get the file and decode it with base64 then write it to the tempfile
-          tempfile.write(Base64.decode64(base64String))
-          #create a new uploaded file
-          uploaded_file = ActionDispatch::Http::UploadedFile.new(:tempfile => tempfile, :filename => "photo.jpeg", :original_filename => "someothername.jpeg") 
-          #replace picture_path with the new uploaded file
-          @trash_image.trash_image =  uploaded_file
+    if params[:trash_image][:temp_image]
+      base64String = params[:trash_image][:temp_image]
+      #create a new tempfile named fileupload
+      tempfile = Tempfile.new("fileupload")
+      tempfile.binmode
+      #get the file and decode it with base64 then write it to the tempfile
+      tempfile.write(Base64.decode64(base64String))
+      #create a new uploaded file
+      uploaded_file = ActionDispatch::Http::UploadedFile.new(:tempfile => tempfile, :filename => "photo.jpeg", :original_filename => "someothername.jpeg") 
+      #replace picture_path with the new uploaded file
+      @trash_image.trash_image =  uploaded_file
     end
 
     @trash_image.created_by = current_user.id
