@@ -35,6 +35,10 @@ class TrashImagesController < ApplicationController
     @trash_image = TrashImage.new(trash_image_params)
 
     if params[:trash_image][:temp_image]
+      existing_images = TrashImage.find_by_trash_id(@trash_image.trash_id)
+      if existing_images 
+        existing_images.destroy_all
+      end
       base64String = params[:trash_image][:temp_image]
       #create a new tempfile named fileupload
       tempfile = Tempfile.new("fileupload")
