@@ -83,6 +83,17 @@ class TrashesController < ApplicationController
   # PATCH/PUT /trashes/1.json
   def update
     @trash.updated_by = current_user.id
+    
+    user_auth_token = request.headers["X-API-TOKEN"].presence
+    if user_auth_token
+      if params[:trash][:images] == true 
+        existing_images = TrashImage.where(trash_id: @trash.id)
+        if existing_images 
+          existing_images.destroy_all
+        end
+      end
+    end
+
     respond_to do |format|
       if @trash.update(trash_params)       
         toggle_temp_images #unless params[:trash][:temp_id].blank?
