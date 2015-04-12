@@ -35,11 +35,7 @@ class TrashesController < ApplicationController
   end
 
   def user_index
-    user_auth_token = request.headers["X-API-TOKEN"].presence
-    if user_auth_token
-      current_user = User.find_by_authentication_token(user_auth_token)
-    end
-
+   
     @trash = Trash.where(created_by: current_user.id)
     respond_to do |format|
       format.html { }

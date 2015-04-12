@@ -11,6 +11,7 @@ class ApplicationController < ActionController::Base
   around_filter :global_request_logging
   skip_before_filter  :verify_authenticity_token
 
+  alias_method :devise_current_user, :current_user
  
  #  private
   
@@ -26,6 +27,16 @@ class ApplicationController < ActionController::Base
       sign_in(user, store: false)
     end
   end
+
+  def current_user       
+    user_auth_token = request.headers["X-API-TOKEN"].presence
+    if user_auth_token
+      User.find_by_authentication_token(user_auth_token)      
+    else
+      devise_current_user
+    end   
+  end
+
 
   def global_request_logging 
     logger.info "USERAGENT: #{request.headers['X-API-TOKEN']}"
