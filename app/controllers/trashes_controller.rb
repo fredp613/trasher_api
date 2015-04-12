@@ -8,12 +8,12 @@ class TrashesController < ApplicationController
     
     if params[:trash_type]
       if params[:trash_type] == "Wanted"
-        @trash = Trash.wanted.order(:created_at).page(params[:page]).per(20)
+        @trash = Trash.wanted.order(:created_at => :desc).page(params[:page]).per(20)
       else
-        @trash = Trash.rid.order(:created_at).page(params[:page]).per(20)
+        @trash = Trash.rid.order(:created_at => :desc).page(params[:page]).per(20)
       end
     else
-      @trash = Trash.wanted.order(:created_at).page(params[:page]).per(20)        
+      @trash = Trash.wanted.order(:created_at => :desc).page(params[:page]).per(20)        
     end
    
     respond_to do |format|
@@ -24,8 +24,8 @@ class TrashesController < ApplicationController
   end
 
   def index_api 
-    @wanted_trash = Trash.wanted.order(:created_at).page(params[:page]).per(20)
-    @rid_trash = Trash.rid.order(:created_at).page(params[:page]).per(20)
+    @wanted_trash = Trash.wanted.order(:created_at => :desc).page(params[:page]).per(20)
+    @rid_trash = Trash.rid.order(:created_at => :desc).page(params[:page]).per(20)
     @trash = @wanted_trash + @rid_trash
 
     respond_to do |format|      
@@ -36,7 +36,7 @@ class TrashesController < ApplicationController
 
   def user_index
    
-    @trash = Trash.where(created_by: current_user.id)
+    @trash = Trash.where(created_by: current_user.id).order(:updated_at => :desc)
     respond_to do |format|
       format.html { }
       format.json { render json: @trash }
